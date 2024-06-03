@@ -1,1 +1,45 @@
-
+{
+    "sql": {
+        "tables": [
+            {
+                "name": "data",
+                "query": "SELECT display_name,last_check FROM centreon_storage.%(constants.resource_type)s WHERE %(constants.resource_type)_id = %(constants.resource_id);",
+                "entries": [
+                    {
+                        "id": "display_name"
+                    },
+                    {
+                        "id": "last_check"
+                    }
+                ]
+            }
+        ]
+    },
+    "selection_loop": [
+        {
+            "name": "data",
+            "source": "%(sql.tables.data)",
+            "expand_table": {
+                "mytable:": "%(sql.tables.data.[%(data.display_name)])"
+            },
+            "perfdatas": [
+                {
+                    "nlabel": "resource.last_check.timestamp",
+                    "value": "%(data.last_check)",
+                    "min": "0"
+                }
+            ],
+            "formatting": {
+                "printf_msg": "Resource type '%s' - name '%s' : Last check timestamp='%s'",
+                "printf_var": [
+                    "%(constants.resource_type)",
+                    "%(data.display_name)",
+                    "%(data.last_check)"
+                ]
+            }
+        }
+    ],
+    "formatting": {
+        "custom_message_global": "Timestamp retrieved"
+    }
+}
