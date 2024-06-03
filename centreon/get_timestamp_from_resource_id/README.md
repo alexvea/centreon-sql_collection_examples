@@ -17,7 +17,8 @@ same plugin command :
 sudo -u centreon-engine /usr/lib/centreon/plugins//centreon_mysql.pl --plugin=database::mysql::plugin --mode=collection \
 --host=127.0.0.1  --username=centreon --password='Centreon$123' \
 --config /tmp/get_timestamp_from_resource_id.json \
---constant='resource_id=13' --constant='resource_type=host' \
+--constant='resource_id=13' \
+--constant='resource_type=host' \
 --output-ignore-label
 ````
 Working output : 
