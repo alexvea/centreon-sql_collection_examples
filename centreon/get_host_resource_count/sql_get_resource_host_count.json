@@ -1,0 +1,72 @@
+{
+    "mapping": {
+        "host_activate": {
+            "0": "desactivated",
+            "1": "activated"
+        }
+    },
+    "sql": {
+        "tables": [
+            {
+                "name": "data",
+                "query": "SELECT host_activate FROM centreon.host WHERE host_register='1';",
+                "entries": [
+                    {"id": "host_activate", "map": "host_activate"}
+                ]
+            }
+        ]
+    },
+    "selection": [
+        {
+            "name": "dataSelection",
+            "source": "%(sql.tables.data)",
+            "functions": [
+                  {
+                         "type": "count",
+                         "src": "%(sql.tables.data)",
+                         "filter": "%(src.host_activate) eq 'activated'",
+                         "save": "%(resourceActivatedCount)"
+                  },
+                  {
+                         "type": "count",
+                         "src": "%(sql.tables.data)",
+                         "filter": "%(src.host_activate) eq 'desactivated'",
+                         "save": "%(resourceDesactivatedCount)"
+                  },
+                  {
+                         "type": "count",
+                         "src": "%(sql.tables.data)",
+                         "save": "%(resourceTotalCount)"
+                  }
+            ],
+            "warning": "%(resourceActivatedCount) > %(constants.warning_activated)",
+            "critical": "%(resourceActivatedCount) > %(constants.critical_activated)",
+            "perfdatas": [
+                {
+                    "nlabel": "resource.activated.count",
+                    "value": "%(resourceActivatedCount)",
+                    "warning": "%(constants.warning_activated)",
+                    "min": "0",
+                    "max" : "%(resourceTotalCount)"
+                },
+                {
+                    "nlabel": "resource.desactivated.count",
+                    "value": "%(resourceDesactivatedCount)",
+                    "warning": "%(constants.warning_desactivated)",
+                    "min": "0",
+                    "max" : "%(resourceTotalCount)"
+                }
+            ],
+            "formatting": {
+                "printf_msg": "Resource host activated count :'%s' - desactivated count :'%s'",
+                "printf_var": [
+                    "%(resourceActivatedCount)",
+                    "%(resourceDesactivatedCount)"
+                ]
+            }
+        }
+    ],
+    "formatting": {
+        "custom_message_global": "Resource count retrieved"
+    }
+}
