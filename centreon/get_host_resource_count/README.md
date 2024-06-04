@@ -29,10 +29,10 @@ OK: Resource host activated count :'2' - desactivated count :'1' | 'resource.act
 WARNING/CRITICAL output :
 
 ````
-WARNING: Resource host activated count :'2' - desactivated count :'1' | 'resource.activated.count'=2;1;;0;3 'resource.desactivated.count'=1;;;0;3
+WARNING: Resource host activated count :'101' - desactivated count :'1' | 'resource.activated.count'=101;100;;0;102 'resource.desactivated.count'=1;;;0;102
 ````
 ````
-CRITICAL: Resource host activated count :'2' - desactivated count :'1' | 'resource.activated.count'=2;;;0;3 'resource.desactivated.count'=1;;;0;3
+CRITICAL: Resource host activated count :'201' - desactivated count :'1' | 'resource.activated.count'=201;;200;0;202 'resource.desactivated.count'=1;;;0;202
 ````
 ## Use case ##
 
