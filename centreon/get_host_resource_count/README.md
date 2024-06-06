@@ -42,6 +42,7 @@ https://docs.centreon.com/docs/administration/licenses/#your-epp-license-is-not-
 ## Improvement ##
 
 Can be improved to check also service activated/desactived count.
+
 Known issue/behavior, when only one of the threshold is configured with --constant, you will get this output : 
 ````
 UNKNOWN: Unsafe code evaluation: syntax error at (eval 45) line 1, at EOF 
